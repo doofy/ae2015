@@ -10,4 +10,42 @@
 \begin{document}
 \maketitle
 
+queue
+-first-in-first-out data structure
+-first-come-first-server processing of a queue
+-performs the function of a buffer
+-doesnt have a capacity
+-can be empty
+-queue underflow
+-queue overflow
+
+%klassischen internen Implementierungen des Datentyps Stack besprochen
+
+Queue
+\begin{itemize}
+  \item enqueue(type $v$) Hängt $v$ an die Queue an
+  \item type dequeue() Liefert ältestes Element der Queue und entfernt es
+\end{itemize}
+
+Implementierung (optimal im RAM-Modell)
+\begin{itemize}
+  \item Array + Zeiger auf oberstes Element + Zeiger auf unterstes Element
+  \item Zeigerverkettete Liste
+\end{itemize}
+
+Anzahl der I/Os (für beliebige Abfolge von Operationen)
+\begin{itemize}
+  \item O(1) pro Operation
+\end{itemize}
+
+%ihr Verhalten im Externspeicher-Setting analysiert
+
+Extern-Queue
+\begin{itemize}
+  \item Interner Speicher ("Puffer"): Array $J$ der Größe $2B$; restliche Daten extern
+  \item $J$ enthält zu jedem Zeitpunkt die $k \leq 2B$ obersten Elemente
+\end{itemize}
+
+
+%eine Modifikation vorgeschlagen, die in diesem Setting beweisbar besser funktioniert
 \end{document}
