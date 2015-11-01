@@ -1,5 +1,5 @@
 \documentclass{beamer}
-%\usepackage[ngerman]{babel}
+\usepackage[ngerman]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[utf8x]{inputenc}
 
@@ -148,6 +148,17 @@
     \item Falls Ende-Block mehr als einen Eintrag hat: $v$ ausliefern und aus dem Block löschen. \bf{Kein I/O}
     \item Falls Ende-Block einen Eintrag hat: Eintrag ausliefern und neuen Ende-Block laden. \bf{1 I/O}
   \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+  \frametitle{Aufgabe 1.1 (b)}
+
+  Betrachte den Algorithmus \emph{Counting Sort} zum Sortieren von $N$ vielen Zahlen aus dem Universum $\{1,2,\dots{},k\}$ in linearer Zeit $O(N+k)$. 
+  Sei $k = \alpha \cdot M$.
+  Wieviele I/O-Operationen benötigt der Algorithmus, falls $\alpha = 0,5$ bzw. falls $\alpha > 1$.
+  Kann man den Algorithmus für letzteren Fall einfach verbessern?
 \end{frame}
 
 \end{document}
