@@ -9,6 +9,7 @@
 %\useoutertheme{smoothbars} %overview at top
 %\useinnertheme[shadow=true]{rounded} %grey preview of bullet points
 %\beamersetuncovermixins{\opaqueness<1>{25}}{\opaqueness<2->{15}}
+\beamertemplatenavigationsymbolsempty %remove navigation symbols
 
 \usepackage{tikz}
 \usetikzlibrary{arrows}
@@ -42,7 +43,17 @@
 \section{Aufgabe 1.1a}
 \begin{frame}
   \frametitle{Queue}
-  \framesubtitle{}
+  \framesubtitle{Die Datenstruktur}
+  \begin{itemize}
+    \item Warteschlange / Puffer
+    \item FIFO (first-in-first-out)
+    \item Nimmt beliebig viele Objekte auf
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Queue}
+  \framesubtitle{Im Beispiel}
   \begin{figure}
     \centering
     \begin{tikzpicture}
@@ -106,9 +117,7 @@
     \hspace{10mm}
     \begin{tikzpicture}[>=latex']
       \foreach \y in {1,2,3} {
-        \ifthenelse{\y<3}
-        {\node[block3] at (3*\y/4,0) (item\y) {};}
-        {\node[block2] at (3*\y/4,0) (item\y) {$\y$};}
+        \node[block2] at (3*\y/4,0) (item\y) {$\y$};
       }
       \node (d1) [below of=item2] {extern};
     \end{tikzpicture}
@@ -130,14 +139,14 @@
 
   enqueue(type $v$)
   \begin{itemize}[<+->]
-    \item Falls Anfang-Block Platz hat: Füge $v$ ein. Kein I/O
-    \item Falls Anfang-Block voll: Vollen Anfang-Block auslagern und neuen im internen Speicher anfangen. 1 I/O
+    \item Falls Anfang-Block Platz hat: Füge $v$ ein. \bf{Kein I/O}
+    \item Falls Anfang-Block voll: Vollen Anfang-Block auslagern und neuen im internen Speicher anfangen. \bf{1 I/O}
   \end{itemize}
 
   type dequeue($v$)
   \begin{itemize}[<+->]
-    \item Falls Ende-Block mehr als einen Eintrag hat: $v$ ausliefern und aus dem Block löschen. Kein I/O
-    \item Falls Ende-Block einen Eintrag hat: Eintrag ausliefern und neuen Ende-Block laden. 1 I/O
+    \item Falls Ende-Block mehr als einen Eintrag hat: $v$ ausliefern und aus dem Block löschen. \bf{Kein I/O}
+    \item Falls Ende-Block einen Eintrag hat: Eintrag ausliefern und neuen Ende-Block laden. \bf{1 I/O}
   \end{itemize}
 \end{frame}
 
