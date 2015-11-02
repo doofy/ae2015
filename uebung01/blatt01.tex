@@ -19,6 +19,7 @@
 
 \usepackage{ifthen}
 \usepackage{graphicx}
+\usepackage{listings}
 
 \title{Übungsblatt 1}
 \subtitle{Algorithm Engineering}
@@ -208,7 +209,7 @@
     \item[Z. 1-2] Block 1:
     \begin{itemize}
       \item Initialisierung des Hilfsarrays der Größe $k+1$
-      \item Anzahl IO-Operationen:
+      \item Anzahl I/O-Operationen:
             \[
               \frac{k+1}{Blockgr.} \Rightarrow O(\frac{k}{Blockgr.})
             \]
@@ -228,7 +229,7 @@
     \begin{itemize}
       \item Zählung der Werte
       \item Inkrementiere $C[A[j]]$ um 1
-      \item Anzahl IO-Operationen:
+      \item Anzahl I/O-Operationen:
             \[
               \frac{n}{Blockgr.} + n \Rightarrow O(\frac{n}{Blockgr.} + n)
             \]
@@ -247,7 +248,7 @@
     \item[Z. 6-7] Block 3:
     \begin{itemize}
       \item Berechnung der Ausgabeadressen (Index im Ausgabearray)
-      \item Anzahl IO-Operationen:
+      \item Anzahl I/O-Operationen:
             \[
               \frac{k}{Blockgr.} \Rightarrow O(\frac{k}{Blockgr.})
             \]
@@ -268,7 +269,7 @@
       \item Kopiere die Werte aus dem Eingabearray in das Ausgabearray,
       \item die Position im Ausgabearray ist $C[A[j]]$
       \item Dekrementiere $C[A[j]]$ um 1
-      \item Anzahl IO-Operationen:
+      \item Anzahl I/O-Operationen:
             \[
               \frac{n}{Blockgr.} + 2n \Rightarrow O(n + \frac{n}{Blockgr.})
             \]
@@ -284,7 +285,7 @@
 \begin{frame}
   \frametitle{Counting Sort Algorithmus}
   \begin{itemize}
-    \item Gesamt Anzahl IO-Operationen:
+    \item Gesamt Anzahl I/O-Operationen:
     \begin{equation*}
       \frac{k+1}{Blockgr.} +
       \frac{n}{Blockgr.} + n +
@@ -292,10 +293,10 @@
       \frac{n}{Blockgr.} + 2n =
     \end{equation*}
     \begin{equation*}
-      3n+\frac{2(n+k)+1}{Blockgr.}
+      \frac{2(n+k)+1}{Blockgr.}+3n
     \end{equation*}
     \begin{equation*}
-      O(n+\frac{n+k}{Blockgr.})
+      \Rightarrow O(\frac{n+k}{Blockgr.}+n)
     \end{equation*}
   \end{itemize}
 \end{frame}
@@ -312,7 +313,7 @@
 
 \begin{frame}<-2>
   \frametitle{Counting Sort Algorithmus}
-  Anzahl IO-Operationen bei $\alpha = 0,5$:
+  Anzahl I/O-Operationen bei $\alpha = 0,5$:
   \begin{itemize}
     \item[Block 1] $\frac{k+1}{Blockgr.}$
     \item[Block 2] $\frac{n}{Blockgr.} + \color<2>{red}{\frac{k+1}{Blockgr.}}$
@@ -326,27 +327,74 @@
 
   \begin{block}<2>{}
     \color{red}
-    ist schon im Cache vorhanden, verursacht daher keine IO-Operationen
+    ist schon im Cache vorhanden, verursacht daher keine I/O-Operationen
   \end{block}
 \end{frame}
 
 \begin{frame}
   \frametitle{Counting Sort Algorithmus}
-  Anzahl IO-Operationen bei $\alpha = 0,5$:
+  Anzahl I/O-Operationen bei $\alpha = 0,5$:
   \begin{itemize}
     \item[Block 1] $\frac{k+1}{Blockgr.}$
     \item[Block 2] $\frac{n}{Blockgr.}$
     \item[Block 3] --
     \item[Block 4] $\frac{n}{Blockgr.} + n$
-    \item[Gesamt] $\frac{k+1}{Blockgr.} + \frac{n}{Blockgr.} + \frac{n}{Blockgr.} + n$
+    \item[Gesamt] $\frac{k+1}{Blockgr.} + \frac{n}{Blockgr.} + \frac{n}{Blockgr.} + n =$
     \begin{equation*}
-    \frac{(k + 1) + 2n}{Blockgr.} + n = O(\frac{k + n}{Blockgr.})
+    \frac{(k + 1) + 2n}{Blockgr.} + n
+    \end{equation*}
+    \begin{equation*}
+    \Rightarrow O(\frac{k + n}{Blockgr.} + n)
     \end{equation*}
   \end{itemize}
 \end{frame}
 
+
 \begin{frame}
   \frametitle{Counting Sort Algorithmus}
+  Sei $k = \alpha \cdot M$. Wieviele I/O-Operationen benötigt der Algorithmus, falls $\alpha > 1$?
+  \begin{itemize}
+    \item Hilfsarray $C$ kann nicht komplett im Cache vorgehalten werden
+    \item Ausnutzung der örtlichen Lokalität bei Eingabearray $A$
+    \item Ergebnis: siehe allgemeine Berechnung weiter oben
+    \begin{equation*}
+    \frac{2(n+k)+1}{Blockgr.}+3n \Rightarrow O(\frac{n+k}{Blockgr.}+n)
+    \end{equation*}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Counting Sort Algorithmus}
+  Kann man den Algorithmus für den Fall $\alpha > 1$ einfach verbessern?
+  \begin{itemize}
+    \item Blöcke 1 - 3 sind optimal
+    \item Block 4 kann insg. optimiert werden
+  \end{itemize}
+  \vspace{1cm}
+  \begin{lstlisting}[caption={Block 4 Optimierung},captionpos=b,frame=single]
+  for j <- length[A] downto 1
+    do for i <- C[A[j]] downto C[A[j] -1]
+         do B[C[A[j]]] <- A[j]
+            C[A[j]] <- C[A[j]] -1
+  \end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Counting Sort Algorithmus}
+
+  \begin{itemize}
+    \item Ausnutzung der örtlichen Lokalität für $A, B, C$
+    \item I/O Operationen: $\frac{n}{Blockgr} + \frac{k}{Blockgr} + \frac{n}{Blockgr} = \frac{2n+k}{Blockgr.} \Rightarrow O(\frac{n+k}{Blockgr.})$
+  \end{itemize}
+
+  \vspace{1cm}
+  \begin{lstlisting}[caption={Block 4 Optimierung},captionpos=b,frame=single]
+  for j <- length[A] downto 1
+    do for i <- C[A[j]] downto C[A[j] -1]
+         do B[C[A[j]]] <- A[j]
+            C[A[j]] <- C[A[j]] -1
+  \end{lstlisting}
 \end{frame}
 
 \begin{frame}
