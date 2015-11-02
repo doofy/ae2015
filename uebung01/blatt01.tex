@@ -302,6 +302,51 @@
 
 \begin{frame}
   \frametitle{Counting Sort Algorithmus}
+  Sei $k = \alpha \cdot M$. Wieviele I/O-Operationen benötigt der Algorithmus, falls $\alpha = 0,5$?
+  \begin{itemize}
+    \item da $k = \frac{M}{2}$, können $2\cdot k$ Elemente im Cache vorgehalten werden
+    \item Hilfsarray $C$ mit $k$ Elementen wird bei jeder Operation verwendet, und passt komplett in den Cache
+    \item Ausnutzung von örtlicher Lokalität bei Eingabearray $A$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}<-2>
+  \frametitle{Counting Sort Algorithmus}
+  Anzahl IO-Operationen bei $\alpha = 0,5$:
+  \begin{itemize}
+    \item[Block 1] $\frac{k+1}{Blockgr.}$
+    \item[Block 2] $\frac{n}{Blockgr.} + \color<2>{red}{\frac{k+1}{Blockgr.}}$
+    \item[Block 3] $\color<2>{red}{\frac{k}{Blockgr.}}$
+    \item[Block 4] $\frac{n}{Blockgr.} + {\color<2>{red}{\frac{k+1}{Blockgr.}}} + n$
+    \item[Gesamt] $\frac{k+1}{Blockgr.} + \frac{n}{Blockgr.} + {\color<2>{red}\frac{k+1}{Blockgr.} + \frac{k}{Blockgr.}} + \frac{n}{Blockgr.} + {\color<2>{red}\frac{k+1}{Blockgr.}} + n$
+    \begin{equation*}
+      \frac{{\color<2>{red}3}(k + 1)+{\color<2>{red}k} + 2n}{Blockgr.} + n
+    \end{equation*}
+  \end{itemize}
+
+  \begin{block}<2>{}
+    \color{red}
+    ist schon im Cache vorhanden, verursacht daher keine IO-Operationen
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Counting Sort Algorithmus}
+  Anzahl IO-Operationen bei $\alpha = 0,5$:
+  \begin{itemize}
+    \item[Block 1] $\frac{k+1}{Blockgr.}$
+    \item[Block 2] $\frac{n}{Blockgr.}$
+    \item[Block 3] --
+    \item[Block 4] $\frac{n}{Blockgr.} + n$
+    \item[Gesamt] $\frac{k+1}{Blockgr.} + \frac{n}{Blockgr.} + \frac{n}{Blockgr.} + n$
+    \begin{equation*}
+    \frac{(k + 1) + 2n}{Blockgr.} + n = O(\frac{k + n}{Blockgr.})
+    \end{equation*}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Counting Sort Algorithmus}
 \end{frame}
 
 \begin{frame}
