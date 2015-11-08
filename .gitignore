@@ -1,0 +1,12 @@
+
+# Latex temp files
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
+*.bbl
+*.blg
+*.run.xml
