@@ -20,6 +20,9 @@
 \usepackage{ifthen}
 \usepackage{graphicx}
 \usepackage{listings}
+\usepackage{cancel}
+\def \korrekturfarbe {blue}
+\renewcommand{\CancelColor}{\color{\korrekturfarbe}}
 
 \title{Übungsblatt 1}
 \subtitle{Algorithm Engineering}
@@ -198,6 +201,12 @@
   \end{figure}
 \end{frame}
 
+\begin{frame}{Nachtrag}
+  \begin{center}
+    Alle {\color{\korrekturfarbe}blau} durchgestrichenen Passagen sind Korrekturen aus der Übung
+  \end{center}
+\end{frame}
+
 \begin{frame}{Counting Sort Algorithmus}
 
   \begin{itemize}
@@ -206,7 +215,7 @@
       \item Initialisierung des Hilfsarrays der Größe $k+1$
       \item Anzahl I/O-Operationen:
             \[
-              \frac{k+1}{Blockgr.} \Rightarrow O(\frac{k}{Blockgr.})
+              \frac{k+1}{Blockgr.} \Rightarrow O(\xcancel{\frac{k}{Blockgr.}}) \Rightarrow O(k)
             \]
     \end{itemize}
   \end{itemize}
@@ -225,7 +234,8 @@
       \item Inkrementiere $C[A[j]]$ um 1
       \item Anzahl I/O-Operationen:
             \[
-              \frac{n}{Blockgr.} + n \Rightarrow O(\frac{n}{Blockgr.} + n)
+              \frac{n}{Blockgr.} + n \Rightarrow O(\xcancel{\frac{n}{Blockgr.} +} n) ~
+              \Rightarrow O(n)
             \]
     \end{itemize}
   \end{itemize}
@@ -243,7 +253,9 @@
       \item Berechnung der Ausgabeadressen (Index im Ausgabearray)
       \item Anzahl I/O-Operationen:
             \[
-              \frac{k}{Blockgr.} \Rightarrow O(\frac{k}{Blockgr.})
+              \frac{k}{Blockgr.} \Rightarrow
+              O(\xcancel{\frac{k}{Blockgr.}}) ~
+              \Rightarrow O(k)
             \]
     \end{itemize}
   \end{itemize}
@@ -263,7 +275,9 @@
       \item Dekrementiere $C[A[j]]$ um 1
       \item Anzahl I/O-Operationen:
             \[
-              \frac{n}{Blockgr.} + 2n \Rightarrow O(n + \frac{n}{Blockgr.})
+              \frac{n}{Blockgr.} + 2n \Rightarrow
+              O(\xcancel{n + \frac{n}{Blockgr.}}) ~
+              \Rightarrow O(n)
             \]
     \end{itemize}
   \end{itemize}
@@ -287,7 +301,8 @@
       \frac{2(n+k)+1}{Blockgr.}+3n
     \end{equation*}
     \begin{equation*}
-      \Rightarrow O(\frac{n+k}{Blockgr.}+n)
+      \Rightarrow O(\xcancel{\frac{n+k}{Blockgr.}+n}) ~\Rightarrow
+      O(n + k)
     \end{equation*}
   \end{itemize}
 \end{frame}
@@ -304,35 +319,36 @@
 \begin{frame}<-2>{Counting Sort Algorithmus}{Teilaufgabe}
   Anzahl I/O-Operationen bei $\alpha = 0,5$:
   \begin{itemize}
-    \item[Block 1] $\frac{k+1}{Blockgr.}$
-    \item[Block 2] $\frac{n}{Blockgr.} + \color<2>{red}{\frac{k+1}{Blockgr.}}$
-    \item[Block 3] $\color<2>{red}{\frac{k}{Blockgr.}}$
-    \item[Block 4] $\frac{n}{Blockgr.} + {\color<2>{red}{\frac{k+1}{Blockgr.}}} + n$
-    \item[Gesamt] $\frac{k+1}{Blockgr.} + \frac{n}{Blockgr.} + {\color<2>{red}\frac{k+1}{Blockgr.} + \frac{k}{Blockgr.}} + \frac{n}{Blockgr.} + {\color<2>{red}\frac{k+1}{Blockgr.}} + n$
+    \item[Block 1] $\xcancel{\frac{k+1}{Blockgr.}}$ {\color{\korrekturfarbe}$~\rightarrow$ durchgestrichen weil $C$ nicht aus dem Externspeicher gelesen, sondern direkt im Cache generiert und initialisiert wird}
+    \item[Block 2] $\frac{n}{Blockgr.} + {\color<2>{red}\xcancel{\frac{k+1}{Blockgr.}}}$ {\color{\korrekturfarbe} $~\rightarrow~$ durchgestrichen aus dem selben Grund wie oben}
+    \item[Block 3] ${\color<2>{red}\xcancel{\frac{k}{Blockgr.}}}$ {\color{\korrekturfarbe} $~\rightarrow~$ s.o.}
+    \item[Block 4] $\frac{n}{Blockgr.} + {\color<2>{red}{\xcancel{\frac{k+1}{Blockgr.}}}} + n$ {\color{\korrekturfarbe} $~\rightarrow~$ s.o.}
+    \item[Gesamt] $\xcancel{\frac{k+1}{Blockgr.}} + \frac{n}{Blockgr.} + {\color<2>{red}\xcancel{\frac{k+1}{Blockgr.}} + \xcancel{\frac{k}{Blockgr.}}} + \frac{n}{Blockgr.} + {\color<2>{red}\xcancel{\frac{k+1}{Blockgr.}}} + n$
     \begin{equation*}
-      \frac{{\color<2>{red}3}(k + 1)+{\color<2>{red}k} + 2n}{Blockgr.} + n
+      =~ \xcancel{\frac{{\color<2>{red}3}(k + 1)+{\color<2>{red}k} + 2n}{Blockgr.} + n}~~~
+      =~ \frac{2n}{Blockgr.} +n
     \end{equation*}
   \end{itemize}
 
-  \begin{block}<2>{}
-    \color{red}
-    ist schon im Cache vorhanden, verursacht daher keine I/O-Operationen
-  \end{block}
+  \only<2>{\color{red}
+  ist schon im Cache vorhanden, verursacht daher keine I/O-Operationen}
 \end{frame}
 
 \begin{frame}{Counting Sort Algorithmus}
   Anzahl I/O-Operationen bei $\alpha = 0,5$:
   \begin{itemize}
-    \item[Block 1] $\frac{k+1}{Blockgr.}$
+    \item[Block 1] $\xcancel{\frac{k+1}{Blockgr.}}$
     \item[Block 2] $\frac{n}{Blockgr.}$
     \item[Block 3] --
     \item[Block 4] $\frac{n}{Blockgr.} + n$
-    \item[Gesamt] $\frac{k+1}{Blockgr.} + \frac{n}{Blockgr.} + \frac{n}{Blockgr.} + n =$
+    \item[Gesamt] $\xcancel{\frac{k+1}{Blockgr.}} + \frac{n}{Blockgr.} + \frac{n}{Blockgr.} + n$
     \begin{equation*}
-    \frac{(k + 1) + 2n}{Blockgr.} + n
+    =~ \xcancel{\frac{(k + 1) + 2n}{Blockgr.} + n}
+    =~ \frac{2n}{Blockgr.} +n
     \end{equation*}
     \begin{equation*}
-    \Rightarrow O(\frac{k + n}{Blockgr.} + n)
+    \Rightarrow O(\xcancel{\frac{k + n}{Blockgr.} + n}) ~
+    \Rightarrow O(n)
     \end{equation*}
   \end{itemize}
 \end{frame}
@@ -345,7 +361,10 @@
     \item Ausnutzung der örtlichen Lokalität bei Eingabearray $A$
     \item Ergebnis: siehe allgemeine Berechnung weiter oben
     \begin{equation*}
-    \frac{2(n+k)+1}{Blockgr.}+3n \Rightarrow O(\frac{n+k}{Blockgr.}+n)
+    \frac{2(n+k)+1}{Blockgr.}+3n
+    \end{equation*}
+    \begin{equation*}
+    \Rightarrow O(\xcancel{\frac{n+k}{Blockgr.}+n}) \Rightarrow O(n + k)
     \end{equation*}
   \end{itemize}
 \end{frame}
@@ -353,10 +372,11 @@
 \begin{frame}[fragile]{Counting Sort Algorithmus}{I/O Optimierung}
   Kann man den Algorithmus für den Fall $\alpha > 1$ einfach verbessern?
   \begin{itemize}
-    \item<1-> Blöcke 1 - 3 sind optimal
+    \item<1-> Blöcke \xcancel{1 - 3} 1 und 3 sind optimal \\
+    {\color{\korrekturfarbe} $\rightarrow$ siehe Nachtrag weiter unten}
     \item<1-> Block 4 kann insg. optimiert werden
     \item<3> Ausnutzung der örtlichen Lokalität für $A, B, C$
-    \item<3> I/O Operationen: $\frac{n}{Blockgr} + \frac{k}{Blockgr} + \frac{n}{Blockgr} = \frac{2n+k}{Blockgr.} \Rightarrow O(\frac{n+k}{Blockgr.})$
+    \item<3> I/O Operationen: $\frac{n}{Blockgr} + \frac{k}{Blockgr} + \frac{n}{Blockgr} = \frac{2n+k}{Blockgr.} \Rightarrow O(\xcancel{\frac{n+k}{Blockgr.}}) \Rightarrow O(n + k)$
   \end{itemize}
 
   \begin{semiverbatim}
@@ -367,6 +387,10 @@
               C[A[j]] <- C[A[j]] -1
   }
   \end{semiverbatim}
+\end{frame}
+
+\begin{frame}{Nachtrag}
+  Die Idee ist es Block~2 so zu verändern, dass nicht nur die Werte für $C[A[j]]$ berechnet werden, sondern Auch die Werte für $C[A[j] + 1]$ bis $C[A[j] + Blockgr. -1]$ da der Bereich in den Cache mit geladen wird.
 \end{frame}
 
 \begin{frame}{Literatur}
