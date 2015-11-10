@@ -15,12 +15,15 @@ int* E;
 int n; //number of veritces
 int m; //number of edges
 
+// checks if solution is valid
 void evalInput() {
 }
 
+// selects the cheapest edge of each vertex for the solution
 void calcSolution() {
 }
 
+// writes out in data format following the convention
 void writeOutput() {
     ofstream f(dat2.c_str());
 
@@ -38,6 +41,7 @@ void writeOutput() {
     f.close();
 }
 
+// reads data in data format following the convention
 void readInput() {
     ifstream f(dat1.c_str());
 
@@ -64,6 +68,7 @@ void readInput() {
     f.close();
 }
 
+// parse the programs parameters
 int parse(int argc, char** argv) {
     if (argc == 3) {
         if (strcmp(argv[1], "-eval")) {
@@ -102,9 +107,6 @@ void print_usage(char* progname) {
     cout << "\t-eval <infile>: call infile to print results" << endl;
 }
 
-/*
- *
- */
 int main(int argc, char** argv) {
     if (parse(argc, argv)) {
         print_usage(argv[0]);
