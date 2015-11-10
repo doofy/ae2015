@@ -27,25 +27,18 @@ void clearSolutions(int* A, int s) {
 void evalInput() {
 }
 
-// selects the cheapest edge of each vertex for the solution
+// greedy selects all edges to non connected vertices to find a solution
 void calcSolution() {
-    int minvertex;
-    int minindex;
-    int minvalue;
-    for (int i = 0; i < m * 4; i += 4) {
-        if (E[i] != minvertex || i == 0) {
-            if (i != 0) {
-                E[minindex + 3] = 1;
-            }
-            minvertex = E[i];
-            minindex = i;
-            minvalue = E[i + 2];
-        }
-        else {
-            if (E[i + 2] < minvalue) {
-                minindex = i;
-                minvalue = E[i + 2];
-            }
+    int i;
+    int C[n]; // array to journal if a vertex is connected
+    for (i = 0; i < n; i++) {
+        C[i] = 0;
+    }
+    C[0] = 1; //mark starting vertex as connected
+    for (i = 0; i < m * 4; i += 4) {
+        if (!C[E[i + 1]]) {
+            E[i + 3] = 1;
+            C[E[i + 1]] = 1;
         }
     }
 }
