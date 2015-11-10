@@ -135,7 +135,12 @@ void readInput() {
             f >> E[i]; //start vertex
             f >> E[i + 1]; //end vertex
             f >> E[i + 2]; //weight
-            f >> E[i + 3]; //is part of the solution
+            string lineEnd;
+            getline(f, lineEnd);
+            if (!lineEnd.empty())
+              E[i + 3] = atoi(lineEnd.c_str()); //is part of the solution
+            else
+              E[i + 3] = 0;
         }
     }
     f.close();
@@ -150,10 +155,10 @@ int parse(int argc, char** argv) {
             if(!evalInput(1)) {
                 cout << weight << endl;
             }
+
+            delete[] V;
+            delete[] E;
             return 0;
-        }
-        else {
-            return 1;
         }
     }
     else if (argc == 5) {
@@ -170,16 +175,14 @@ int parse(int argc, char** argv) {
             }
             writeOutput();
             printInfo();
+
+            delete[] V;
+            delete[] E;
             return 0;
         }
-        else {
-            return 1;
-        }
     }
-    else {
-        return 1;
-    }
-    return 0;
+
+    return 1;
 }
 
 void print_usage(char* progname) {
@@ -194,9 +197,5 @@ int main(int argc, char** argv) {
         print_usage(argv[0]);
         return 1;
     }
-    else {
-        return 0;
-    }
-    delete[] V;
-    delete[] E;
+    return 0;
 }
