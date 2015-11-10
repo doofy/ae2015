@@ -15,6 +15,13 @@ int* E;
 int n; //number of veritces
 int m; //number of edges
 
+// writes 0 in all the is part of the solution entries of array A
+void clearSolutions(int* A, int s) {
+    for (int i = 3; i < s * 4; i += 4) {
+        A[i] = 0;
+    }
+}
+
 // checks if solution is valid
 void evalInput() {
 }
