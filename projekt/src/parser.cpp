@@ -1,7 +1,19 @@
 #include <cstdlib>
 #include <iostream>
+#include <cstring>
+#include <string>
+#include <fstream>
 
 using namespace std;
+
+string dat1;
+string dat2;
+
+char datasetName[256];
+int* V;
+int* E;
+int n; //number of veritces
+int m; //number of edges
 
 void evalInput() {
 }
@@ -10,14 +22,51 @@ void calcSolution() {
 }
 
 void writeOutput() {
+    ofstream f(dat2.c_str());
+
+    if (f.is_open()) {
+        f << datasetName << endl;
+        f << n << endl;
+        f << m << endl;
+        for (int i = 0; i < n; i++) {
+            f << V[i] << endl;
+        }
+        for (int i = 0; i < m * 4; i += 4) {
+            f << E[i] << " " << E[i + 1] << " " << E[i + 2] << " " << E[i + 3] << endl;
+        }
+    }
+    f.close();
 }
 
 void readInput() {
+    ifstream f(dat1.c_str());
+
+    if (f.is_open()) {
+        f.getline(datasetName, 256);
+
+        f >> n; //#vertices
+        f >> m; //#edges
+
+        V = new int[n];
+        E = new int[m * 4];
+
+        for (int i = 0; i < n; i++) {
+            f >> V[i];
+        }
+
+        for (int i = 0; i < m * 4; i += 4) {
+            f >> E[i]; //start vertex
+            f >> E[i + 1]; //end vertex
+            f >> E[i + 2]; //wheight
+            f >> E[i + 3]; //is part of the solution
+        }
+    }
+    f.close();
 }
 
 int parse(int argc, char** argv) {
     if (argc == 3) {
-        if (argv[1] == "-eval") {
+        if (strcmp(argv[1], "-eval")) {
             dat1 = argv[2];
             readInput();
             evalInput();
@@ -28,12 +77,12 @@ int parse(int argc, char** argv) {
         }
     }
     else if (argc == 5) {
-        if (argv[1] == "-in" && argv[3] == "-out") {
+        if (!strcmp(argv[1], "-in") && !strcmp(argv[3],"-out")) {
             dat1 = argv[2];
             dat2 = argv[4];
             readInput();
             calcSolution();
-            writeOuput();
+            writeOutput();
             return 0;
         }
         else {
@@ -43,6 +92,7 @@ int parse(int argc, char** argv) {
     else {
         return 1;
     }
+    return 0;
 }
 
 void print_usage(char* progname) {
@@ -63,4 +113,6 @@ int main(int argc, char** argv) {
     else {
         return 0;
     }
+    delete[] V;
+    delete[] E;
 }
