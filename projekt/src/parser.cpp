@@ -3,6 +3,7 @@
 #include <cstring>
 #include <string>
 #include <fstream>
+#include <climits>
 
 using namespace std;
 
@@ -28,6 +29,25 @@ void evalInput() {
 
 // selects the cheapest edge of each vertex for the solution
 void calcSolution() {
+    int minvertex;
+    int minindex;
+    int minvalue;
+    for (int i = 0; i < m * 4; i += 4) {
+        if (E[i] != minvertex || i == 0) {
+            if (i != 0) {
+                E[minindex + 3] = 1;
+            }
+            minvertex = E[i];
+            minindex = i;
+            minvalue = E[i + 2];
+        }
+        else {
+            if (E[i + 2] < minvalue) {
+                minindex = i;
+                minvalue = E[i + 2];
+            }
+        }
+    }
 }
 
 // writes out in data format following the convention
@@ -93,6 +113,7 @@ int parse(int argc, char** argv) {
             dat1 = argv[2];
             dat2 = argv[4];
             readInput();
+            clearSolutions(E, m);
             calcSolution();
             writeOutput();
             return 0;
