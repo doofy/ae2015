@@ -4,6 +4,7 @@
 #include <string>
 #include <fstream>
 #include <climits>
+#include <ctime>
 
 using namespace std;
 
@@ -16,12 +17,23 @@ int* E;
 int n; //number of veritces
 int m; //number of edges
 
+clock_t start;
+double duration;
 int weight;
 
 void printInfo() {
     cout.precision(3);
     cout << weight << '\t' << duration << endl;
 }
+
+void startTimer() {
+    start = std::clock();
+}
+
+void stopTimer() {
+    duration = (std::clock() - start) / (double) CLOCKS_PER_SEC;
+}
+
 // writes 0 in all the is part of the solution entries of array A
 void clearSolutions(int* A, int s) {
     for (int i = 3; i < s * 4; i += 4) {
@@ -141,7 +153,9 @@ int parse(int argc, char** argv) {
             dat2 = argv[4];
             readInput();
             clearSolutions(E, m);
+            startTimer();
             calcSolution();
+            stopTimer();
             writeOutput();
             printInfo();
             return 0;
