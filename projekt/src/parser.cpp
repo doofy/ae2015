@@ -88,7 +88,7 @@ void calcSolution() {
         C[i] = 0;
     }
     for (i = 0; i < m * 4; i += 4) {
-        if (!C[E[i + 1]] && C[E[i]] < V[E[i]]) {
+        if ((!C[E[i + 1]] && C[E[i]] < V[E[i]]) || (!C[E[i]] && C[E[i + 1]] < V[E[i + 1]])) {
             E[i + 3] = 1;
             C[E[i + 1]]++;
             C[E[i]]++;
