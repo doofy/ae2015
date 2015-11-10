@@ -91,7 +91,7 @@ void readInput() {
 // parse the programs parameters
 int parse(int argc, char** argv) {
     if (argc == 3) {
-        if (strcmp(argv[1], "-eval")) {
+        if (!strcmp(argv[1], "-eval")) {
             dat1 = argv[2];
             readInput();
             evalInput();
