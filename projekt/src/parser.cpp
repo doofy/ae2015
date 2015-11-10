@@ -41,10 +41,11 @@ void clearSolutions(int* A, int s) {
     }
 }
 
-// checks if wheight limits are respected and all vertices have at least one edge
-void checkConnections() {
+// checks if weight limits are respected and all vertices have at least one edge
+int checkConnections(int verbose) {
     int i;
     int C[n]; // array to journal if and how often a vertex is connected
+    weight = 0;
     for (i = 0; i < n; i++) {
         C[i] = 0;
     }
@@ -53,29 +54,36 @@ void checkConnections() {
         if (E[i + 3]) {
             C[E[i]]++;
             C[E[i + 1]]++;
+            weight += E[i + 2];
         }
     }
     // check
     for (i = 0; i < n; i++) {
         if (C[i] == 0) {
-            cout << "ERROR: " << "Vertex " << i << " is not connected." << endl;
+            if (verbose) {
+                cout << "ERROR: " << "Vertex " << i << " is not connected." << endl;
+            }
+            return 1;
         }
         else if (V[i] < C[i]) {
-            cout << "ERROR: " << "Vertex " << i << " is connected with too many edges." << endl;
+            if (verbose) {
+                cout << "ERROR: " << "Vertex " << i << " is connected with too many edges." << endl;
+            }
+            return 1;
         }
     }
+    return 0;
 }
 
 // checks if solution is valid
-void evalInput() {
-    checkConnections();
+int evalInput(int verbose) {
+    return checkConnections(verbose);
 }
 
 // greedy selects all edges to non connected vertices to find a solution
 void calcSolution() {
     int i;
     int C[n]; // array to journal if a vertex is connected
-    weight = 0;
     for (i = 0; i < n; i++) {
         C[i] = 0;
     }
@@ -84,7 +92,6 @@ void calcSolution() {
             E[i + 3] = 1;
             C[E[i + 1]]++;
             C[E[i]]++;
-            weight += E[i + 2];
         }
     }
 }
@@ -127,7 +134,7 @@ void readInput() {
         for (int i = 0; i < m * 4; i += 4) {
             f >> E[i]; //start vertex
             f >> E[i + 1]; //end vertex
-            f >> E[i + 2]; //wheight
+            f >> E[i + 2]; //weight
             f >> E[i + 3]; //is part of the solution
         }
     }
@@ -140,7 +147,9 @@ int parse(int argc, char** argv) {
         if (!strcmp(argv[1], "-eval")) {
             dat1 = argv[2];
             readInput();
-            evalInput();
+            if(!evalInput(1)) {
+                cout << weight << endl;
+            }
             return 0;
         }
         else {
@@ -156,6 +165,9 @@ int parse(int argc, char** argv) {
             startTimer();
             calcSolution();
             stopTimer();
+            if(evalInput(0)) {
+                weight = -1;
+            }
             writeOutput();
             printInfo();
             return 0;
