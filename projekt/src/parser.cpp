@@ -16,6 +16,12 @@ int* E;
 int n; //number of veritces
 int m; //number of edges
 
+int weight;
+
+void printInfo() {
+    cout.precision(3);
+    cout << weight << '\t' << duration << endl;
+}
 // writes 0 in all the is part of the solution entries of array A
 void clearSolutions(int* A, int s) {
     for (int i = 3; i < s * 4; i += 4) {
@@ -57,6 +63,7 @@ void evalInput() {
 void calcSolution() {
     int i;
     int C[n]; // array to journal if a vertex is connected
+    weight = 0;
     for (i = 0; i < n; i++) {
         C[i] = 0;
     }
@@ -65,6 +72,7 @@ void calcSolution() {
             E[i + 3] = 1;
             C[E[i + 1]]++;
             C[E[i]]++;
+            weight += E[i + 2];
         }
     }
 }
@@ -135,6 +143,7 @@ int parse(int argc, char** argv) {
             clearSolutions(E, m);
             calcSolution();
             writeOutput();
+            printInfo();
             return 0;
         }
         else {
