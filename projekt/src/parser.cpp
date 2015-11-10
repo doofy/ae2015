@@ -23,8 +23,34 @@ void clearSolutions(int* A, int s) {
     }
 }
 
+// checks if wheight limits are respected and all vertices have at least one edge
+void checkConnections() {
+    int i;
+    int C[n]; // array to journal if and how often a vertex is connected
+    for (i = 0; i < n; i++) {
+        C[i] = 0;
+    }
+    // count
+    for (i = 0; i < m * 4; i += 4) {
+        if (E[i + 3]) {
+            C[E[i]]++;
+            C[E[i + 1]]++;
+        }
+    }
+    // check
+    for (i = 0; i < n; i++) {
+        if (C[i] == 0) {
+            cout << "ERROR: " << "Vertex " << i << " is not connected." << endl;
+        }
+        else if (V[i] < C[i]) {
+            cout << "ERROR: " << "Vertex " << i << " is connected with too many edges." << endl;
+        }
+    }
+}
+
 // checks if solution is valid
 void evalInput() {
+    checkConnections();
 }
 
 // greedy selects all edges to non connected vertices to find a solution
