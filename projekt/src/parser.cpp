@@ -60,11 +60,11 @@ void calcSolution() {
     for (i = 0; i < n; i++) {
         C[i] = 0;
     }
-    C[0] = 1; //mark starting vertex as connected
     for (i = 0; i < m * 4; i += 4) {
-        if (!C[E[i + 1]]) {
+        if (!C[E[i + 1]] && C[E[i]] < V[E[i]]) {
             E[i + 3] = 1;
-            C[E[i + 1]] = 1;
+            C[E[i + 1]]++;
+            C[E[i]]++;
         }
     }
 }
