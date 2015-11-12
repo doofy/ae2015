@@ -9,6 +9,12 @@
 \useinnertheme[shadow=true]{rounded} %grey preview of bullet points
 \beamertemplatenavigationsymbolsempty %remove navigation symbols
 
+\usepackage{tikz}
+\usetikzlibrary{shapes}
+\tikzstyle{buffer} = [draw,fill=blue!20,minimum width=50,minimum height=15,node distance = 1.5cm]
+\tikzstyle{sorter} = [draw,fill=blue!20,minimum width=30,minimum height=40,inner sep=0,
+regular polygon, regular polygon sides=3,shape border rotate=-90,node distance = 2cm,text width=20,text centered]
+
 \title{Übungsblatt 2}
 \subtitle{Algorithm Engineering}
 \author{Waldemar Smirnow, Michael Stypa}
@@ -67,5 +73,23 @@
     \item Nimmt $k$ sortierte Sequenzen
     \item 
   \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Funnelsort}
+  \framesubtitle{Grafik}
+  \begin{center}
+  \begin{tikzpicture}[every node/.style={scale=0.7}]
+    \scriptsize
+    \node[sorter,scale=6] (sorter) {};
+    \node[buffer] (bufferi) [at=(sorter), right=-10] {buffer i};
+    \node[buffer] (buffer1) [above of=bufferi] {buffer 1};
+    \node[buffer] (buffern) [below of=bufferi] {buffer $\sqrt(k)$};
+    \node[sorter] (lsorteri) [left of=bufferi, left=-15] {$\mathbb{L}_i$};
+    \node[sorter] (lsorter1) [above of=lsorteri, above=0] {$\mathbb{L}_1$};
+    \node[sorter] (lsortern) [below of=lsorteri, below=0] {$\mathbb{L}_{\sqrt(k)}$};
+    \node[sorter] (rsorter) [right of=bufferi, right=10] {$\mathbb{R}$};
+  \end{tikzpicture}
+  \end{center}
 \end{frame}
 \end{document}
