@@ -1,0 +1,71 @@
+%\documentclass[handout]{beamer}
+\documentclass{beamer}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8x]{inputenc}
+
+%\setbeameroption{show notes on second screen=left}
+%\setbeameroption{show notes on second screen}
+\useinnertheme[shadow=true]{rounded} %grey preview of bullet points
+\beamertemplatenavigationsymbolsempty %remove navigation symbols
+
+\title{Übungsblatt 2}
+\subtitle{Algorithm Engineering}
+\author{Waldemar Smirnow, Michael Stypa}
+\institute{Universität Osnabrück}
+\date{\today}
+
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{Funnelsort}
+  \framesubtitle{Eigentschaften}
+  \begin{itemize}
+    \item Vergleichsbasierter Sortierungsalgorithmus
+    \item cache oblivious
+    \item Im externen Speichermodel: Sortierung von $N$ Zahlen
+      mit cache-size $Z$ und cache-lines-length $L$
+      braucht $O(\frac{N}{L}\log_Z{N})$ memory transfers
+      unter der tall cache assumption: $Z = \Omega(L^2)$
+    \item Es wurde geziegt dass diese Anzahl an memory transfers
+      für vergleichsbasierte Sortierung asymptotisch optimal ist
+    \item Asymptotisch optimale Laufzeit in $O(N\log{N})$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Funnelsort}
+  \framesubtitle{Verfahren}
+  \begin{itemize}
+    \item Arbeitet auf zusammenhängenden Arrays
+    \item Schritt 1: Split into $N^{\frac{1}{3}}$ arrays
+      of size $N^{\frac{2}{3}}$ and sort them recursively
+    \item Schritt 2: Merge the $N^{\frac{1}{3}}$ sorted sequences
+      using a $N^{\frac{1}{3}}$ merger
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Funnelsort}
+  \framesubtitle{Vergleich mit Mergesort}
+  \begin{itemize}
+    \item Sortieren von Subarrays
+    \item Mergen von Subarrays in ein sortieres Ergebnisarray
+  \end{itemize}
+  \begin{itemize}
+    \item Merge mittels k-merger
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Funnelsort}
+  \framesubtitle{k-Merger}
+  \begin{itemize}
+    \item Nimmt $k$ sortierte Sequenzen
+    \item 
+  \end{itemize}
+\end{frame}
+\end{document}
