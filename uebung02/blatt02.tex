@@ -18,30 +18,46 @@ regular polygon, regular polygon sides=3,shape border rotate=-90,node distance =
 \tikzstyle{sorter} = [style=bigsorter,fill=blue!10]
 \tikzstyle{mydotted} = [dotted,dash pattern=on 0mm off 2mm,line cap=round, line width=1mm]
 
-\title{Übungsblatt 2}
-\subtitle{Algorithm Engineering}
+\title{Funnelsort}
+\subtitle{Algorithm Engineering - Aufgabe 2.3}
 \author{Waldemar Smirnow, Michael Stypa}
 \institute{Universität Osnabrück}
 \date{\today}
 
 \begin{document}
 \begin{frame}
-    \titlepage
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{Tall Cache Assumption}
+  \framesubtitle{}
+  \begin{center}
+    \begin{tikzpicture}
+      \Large
+      $Z = \Omega\left(L^2\right)$
+    \end{tikzpicture}
+  \end{center}
+  \begin{itemize}
+    \item It's the lower bound counterpart to $O\left(⋅\right)$. $Z$ is larger than some constant times $L^2$
+    \item Where $Z$ is the size of the cache and $L$ is the size of the cache line.
+    \item Vorlesungsfolien Externspeicher Folie 8
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
   \frametitle{Funnelsort}
-  \framesubtitle{Eigentschaften}
+  \framesubtitle{Eigenschaften}
   \begin{itemize}
     \item Vergleichsbasierter Sortierungsalgorithmus
     \item cache oblivious
     \item Im externen Speichermodel: Sortierung von $N$ Zahlen
       mit cache-size $Z$ und cache-lines-length $L$
-      braucht $O(\frac{N}{L}\log_Z{N})$ memory transfers
-      unter der tall cache assumption: $Z = \Omega(L^2)$
+      braucht $O\left(\frac{N}{L}\log_Z{N}\right)$ memory transfers
+      unter der tall cache assumption: $Z = \Omega\left(L^2\right)$
     \item Es wurde geziegt dass diese Anzahl an memory transfers
       für vergleichsbasierte Sortierung asymptotisch optimal ist
-    \item Asymptotisch optimale Laufzeit in $O(N\log{N})$
+    \item Asymptotisch optimale Laufzeit in $O\left(N\log{N}\right)$
   \end{itemize}
 \end{frame}
 
@@ -82,44 +98,47 @@ regular polygon, regular polygon sides=3,shape border rotate=-90,node distance =
   \frametitle{Funnelsort}
   \framesubtitle{Grafik}
   \begin{center}
-  \begin{tikzpicture}[every node/.style={scale=0.7},>=stealth']
-    \node[bigsorter,scale=6] (sorter) {};
+    \begin{tikzpicture}[every node/.style={scale=0.7},>=stealth']
+      \node[bigsorter,scale=6] (sorter) {};
 
-    \node[buffer] (bufferi) [at=(sorter), right=-10] {buffer};
-    \node[buffer] (buffer1) [above of=bufferi] {buffer};
-    \node[buffer] (buffern) [below of=bufferi] {buffer};
+      \node[buffer] (bufferi) [at=(sorter), right=-10] {buffer};
+      \node[buffer] (buffer1) [above of=bufferi] {buffer};
+      \node[buffer] (buffern) [below of=bufferi] {buffer};
 
-    \node[sorter] (lsorteri) [left of=bufferi, left=-7] {$\mathbb{L}_i$};
-    \node[sorter] (lsorter1) [above of=lsorteri, above=0] {$\mathbb{L}_1$};
-    \node[sorter] (lsortern) [below of=lsorteri, below=0] {$\mathbb{L}_{\sqrt{k}}$};
+      \node[sorter] (lsorteri) [left of=bufferi, left=-7] {$\mathbb{L}_i$};
+      \node[sorter] (lsorter1) [above of=lsorteri, above=0] {$\mathbb{L}_1$};
+      \node[sorter] (lsortern) [below of=lsorteri, below=0] {$\mathbb{L}_{\sqrt{k}}$};
 
-    \node[sorter] (rsorter) [right of=bufferi, right=10] {$\mathbb{R}$};
+      \node[sorter] (rsorter) [right of=bufferi, right=10] {$\mathbb{R}$};
 
-    \draw[->] ([xshift=-1cm, yshift=0.3cm]lsorter1.west) -- ([yshift=0.3cm]lsorter1.west);
-    \draw[->] ([xshift=-1cm, yshift=0.0cm]lsorter1.west) -- ([yshift=0.0cm]lsorter1.west);
-    \draw[->] ([xshift=-1cm, yshift=-0.3cm]lsorter1.west) -- ([yshift=-0.3cm]lsorter1.west);
+      \draw[->] ([xshift=-1cm, yshift=0.3cm]lsorter1.west) -- ([yshift=0.3cm]lsorter1.west);
+      \draw[->] ([xshift=-1cm, yshift=0.0cm]lsorter1.west) -- ([yshift=0.0cm]lsorter1.west);
+      \draw[->] ([xshift=-1cm, yshift=-0.3cm]lsorter1.west) -- ([yshift=-0.3cm]lsorter1.west);
 
-    \draw[->] ([xshift=-1cm, yshift=0.3cm]lsorteri.west) -- ([yshift=0.3cm]lsorteri.west);
-    \draw[->] ([xshift=-1cm, yshift=0.0cm]lsorteri.west) -- ([yshift=0.0cm]lsorteri.west);
-    \draw[->] ([xshift=-1cm, yshift=-0.3cm]lsorteri.west) -- ([yshift=-0.3cm]lsorteri.west);
+      \draw[->] ([xshift=-1cm, yshift=0.3cm]lsorteri.west) -- ([yshift=0.3cm]lsorteri.west);
+      \draw[->] ([xshift=-1cm, yshift=0.0cm]lsorteri.west) -- ([yshift=0.0cm]lsorteri.west);
+      \draw[->] ([xshift=-1cm, yshift=-0.3cm]lsorteri.west) -- ([yshift=-0.3cm]lsorteri.west);
 
-    \draw[->] ([xshift=-1cm, yshift=0.3cm]lsortern.west) -- ([yshift=0.3cm]lsortern.west);
-    \draw[->] ([xshift=-1cm, yshift=0.0cm]lsortern.west) -- ([yshift=0.0cm]lsortern.west);
-    \draw[->] ([xshift=-1cm, yshift=-0.3cm]lsortern.west) -- ([yshift=-0.3cm]lsortern.west);
+      \draw[->] ([xshift=-1cm, yshift=0.3cm]lsortern.west) -- ([yshift=0.3cm]lsortern.west);
+      \draw[->] ([xshift=-1cm, yshift=0.0cm]lsortern.west) -- ([yshift=0.0cm]lsortern.west);
+      \draw[->] ([xshift=-1cm, yshift=-0.3cm]lsortern.west) -- ([yshift=-0.3cm]lsortern.west);
 
-    \draw[->] (lsorter1.east) to [out=east,in=west,looseness=1.5] (buffer1.west);
-    \draw[->] (lsorteri.east) to [out=east,in=west] (bufferi.west);
-    \draw[->] (lsortern.east) to [out=east,in=west,looseness=1.5] (buffern.west);
+      \draw[->] (lsorter1.east) to [out=east,in=west,looseness=1.5] (buffer1.west);
+      \draw[->] (lsorteri.east) to [out=east,in=west] (bufferi.west);
+      \draw[->] (lsortern.east) to [out=east,in=west,looseness=1.5] (buffern.west);
 
-    \draw[->] (buffer1.east) to [out=east,in=west,looseness=1.5] ([yshift=0.3cm]rsorter.west);
-    \draw[->] (bufferi.east) to [out=east,in=west] ([yshift=0.0cm]rsorter.west);
-    \draw[->] (buffern.east) to [out=east,in=west,looseness=1.5] ([yshift=-0.3cm]rsorter.west);
+      \draw[->] (buffer1.east) to [out=east,in=west,looseness=1.5] ([yshift=0.3cm]rsorter.west);
+      \draw[->] (bufferi.east) to [out=east,in=west] ([yshift=0.0cm]rsorter.west);
+      \draw[->] (buffern.east) to [out=east,in=west,looseness=1.5] ([yshift=-0.3cm]rsorter.west);
 
-    \draw[->] (rsorter.east) -- ([xshift=1.25cm]rsorter.east);
+      \draw[->] (rsorter.east) -- ([xshift=1.25cm]rsorter.east);
 
-    \draw[mydotted] ([xshift=-0.5cm, yshift=-0.5cm]lsorter1.west) -- ([xshift=-0.5cm, yshift=0.6cm]lsorteri.west);
-    \draw[mydotted] ([xshift=-0.5cm, yshift=-0.5cm]lsorteri.west) -- ([xshift=-0.5cm, yshift=0.6cm]lsortern.west);
-  \end{tikzpicture}
+      \draw[mydotted] ([xshift=-0.5cm, yshift=-0.5cm]lsorter1.west) -- ([xshift=-0.5cm, yshift=0.6cm]lsorteri.west);
+      \draw[mydotted] ([xshift=-0.5cm, yshift=-0.5cm]lsorteri.west) -- ([xshift=-0.5cm, yshift=0.6cm]lsortern.west);
+    \end{tikzpicture}
   \end{center}
 \end{frame}
+
+
+
 \end{document}
