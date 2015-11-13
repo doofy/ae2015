@@ -33,29 +33,30 @@ regular polygon, regular polygon sides=3,shape border rotate=-90,node distance =
   \frametitle{Tall Cache Assumption}
   \framesubtitle{}
   \begin{center}
-    \begin{tikzpicture}
-      \Large
-      $Z = \Omega\left(L^2\right)$
-    \end{tikzpicture}
+    \Large
+    $Z = \Omega\left(L^2\right)$
   \end{center}
   \begin{itemize}
-    \item It's the lower bound counterpart to $O\left(⋅\right)$. $Z$ is larger than some constant times $L^2$
-    \item Where $Z$ is the size of the cache and $L$ is the size of the cache line.
+    \item Cache-Size $Z$, Block-Size $L$
+    \item $\mathcal{O}\left(g\right)$: wächst nicht wesentlich schneller als $g$
+    \item $\Omega\left(g\right)$: wächst nicht wesentlich langsamer als $g$
+    \item $\Theta\left(g\right)$: wächst genauso schnell wie $g$
     \item Vorlesungsfolien Externspeicher Folie 8
   \end{itemize}
+  $\Rightarrow$ $Z$ ist größer als $L^2$ multipliziert mit einem konstanten Faktor
 \end{frame}
 
 \begin{frame}
   \frametitle{Funnelsort}
   \framesubtitle{Eigenschaften}
   \begin{itemize}
-    \item Vergleichsbasierter Sortierungsalgorithmus
-    \item cache oblivious
+    \item Vergleichsbasierter Sortier-Algorithmus
+    \item Cache Oblivious
     \item Im externen Speichermodel: Sortierung von $N$ Zahlen
-      mit cache-size $Z$ und cache-lines-length $L$
+      mit cache-size $Z$ und block-size $L$
       braucht $O\left(\frac{N}{L}\log_Z{N}\right)$ memory transfers
-      unter der tall cache assumption: $Z = \Omega\left(L^2\right)$
-    \item Es wurde geziegt dass diese Anzahl an memory transfers
+      unter der tall cache assumption
+    \item Es wurde gezeigt dass diese Anzahl an memory transfers
       für vergleichsbasierte Sortierung asymptotisch optimal ist
     \item Asymptotisch optimale Laufzeit in $O\left(N\log{N}\right)$
   \end{itemize}
@@ -69,7 +70,7 @@ regular polygon, regular polygon sides=3,shape border rotate=-90,node distance =
     \item Schritt 1: Split into $N^{\frac{1}{3}}$ arrays
       of size $N^{\frac{2}{3}}$ and sort them recursively
     \item Schritt 2: Merge the $N^{\frac{1}{3}}$ sorted sequences
-      using a $N^{\frac{1}{3}}$ merger
+      using a $N^{\frac{1}{3}}$-merger
   \end{itemize}
 \end{frame}
 
