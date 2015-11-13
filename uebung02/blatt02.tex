@@ -11,9 +11,10 @@
 
 \usepackage{tikz}
 \usetikzlibrary{shapes}
-\tikzstyle{buffer} = [draw,fill=blue!20,minimum width=50,minimum height=15,node distance = 1.5cm]
-\tikzstyle{sorter} = [draw,fill=blue!20,minimum width=30,minimum height=40,inner sep=0,
+\tikzstyle{buffer} = [draw,fill=blue!10,minimum width=75,minimum height=20,node distance = 1.5cm]
+\tikzstyle{bigsorter} = [draw,fill=blue!30,minimum width=30,minimum height=40,inner sep=0,
 regular polygon, regular polygon sides=3,shape border rotate=-90,node distance = 2cm,text width=20,text centered]
+\tikzstyle{sorter} = [style=bigsorter,fill=blue!10]
 
 \title{Übungsblatt 2}
 \subtitle{Algorithm Engineering}
@@ -80,15 +81,39 @@ regular polygon, regular polygon sides=3,shape border rotate=-90,node distance =
   \framesubtitle{Grafik}
   \begin{center}
   \begin{tikzpicture}[every node/.style={scale=0.7}]
-    \scriptsize
-    \node[sorter,scale=6] (sorter) {};
+    \node[bigsorter,scale=6] (sorter) {};
+
     \node[buffer] (bufferi) [at=(sorter), right=-10] {buffer i};
     \node[buffer] (buffer1) [above of=bufferi] {buffer 1};
-    \node[buffer] (buffern) [below of=bufferi] {buffer $\sqrt(k)$};
-    \node[sorter] (lsorteri) [left of=bufferi, left=-15] {$\mathbb{L}_i$};
+    \node[buffer] (buffern) [below of=bufferi] {buffer $\sqrt{k}$};
+
+    \node[sorter] (lsorteri) [left of=bufferi, left=-5] {$\mathbb{L}_i$};
     \node[sorter] (lsorter1) [above of=lsorteri, above=0] {$\mathbb{L}_1$};
-    \node[sorter] (lsortern) [below of=lsorteri, below=0] {$\mathbb{L}_{\sqrt(k)}$};
+    \node[sorter] (lsortern) [below of=lsorteri, below=0] {$\mathbb{L}_{\sqrt{k}}$};
+
     \node[sorter] (rsorter) [right of=bufferi, right=10] {$\mathbb{R}$};
+
+    \draw[->] ([xshift=-1cm, yshift=0.3cm]lsorter1.west) -- ([yshift=0.3cm]lsorter1.west);
+    \draw[->] ([xshift=-1cm, yshift=0.0cm]lsorter1.west) -- ([yshift=0.0cm]lsorter1.west);
+    \draw[->] ([xshift=-1cm, yshift=-0.3cm]lsorter1.west) -- ([yshift=-0.3cm]lsorter1.west);
+
+    \draw[->] ([xshift=-1cm, yshift=0.3cm]lsorteri.west) -- ([yshift=0.3cm]lsorteri.west);
+    \draw[->] ([xshift=-1cm, yshift=0.0cm]lsorteri.west) -- ([yshift=0.0cm]lsorteri.west);
+    \draw[->] ([xshift=-1cm, yshift=-0.3cm]lsorteri.west) -- ([yshift=-0.3cm]lsorteri.west);
+
+    \draw[->] ([xshift=-1cm, yshift=0.3cm]lsortern.west) -- ([yshift=0.3cm]lsortern.west);
+    \draw[->] ([xshift=-1cm, yshift=0.0cm]lsortern.west) -- ([yshift=0.0cm]lsortern.west);
+    \draw[->] ([xshift=-1cm, yshift=-0.3cm]lsortern.west) -- ([yshift=-0.3cm]lsortern.west);
+
+    \draw[->] (lsorter1.east) to [out=east,in=west] (buffer1.west);
+    \draw[->] (lsorteri.east) to [out=east,in=west] (bufferi.west);
+    \draw[->] (lsortern.east) to [out=east,in=west] (buffern.west);
+
+    \draw[->] (buffer1.east) to [out=east,in=west] ([yshift=0.3cm]rsorter.west);
+    \draw[->] (bufferi.east) to [out=east,in=west] ([yshift=0.0cm]rsorter.west);
+    \draw[->] (buffern.east) to [out=east,in=west] ([yshift=-0.3cm]rsorter.west);
+
+    \draw[->] (rsorter.east) -- ([xshift=1.25cm]rsorter.east);
   \end{tikzpicture}
   \end{center}
 \end{frame}
