@@ -49,6 +49,7 @@ regular polygon, regular polygon sides=3,shape border rotate=-90,node distance =
 \begin{frame}
   \frametitle{Funnelsort}
   \framesubtitle{Eigenschaften}
+  %prokop
   \begin{itemize}
     \item Vergleichsbasierter Sortier-Algorithmus
     \item Cache Oblivious
@@ -64,7 +65,7 @@ regular polygon, regular polygon sides=3,shape border rotate=-90,node distance =
 
 \begin{frame}
   \frametitle{Funnelsort}
-  \framesubtitle{Verfahren}
+  \framesubtitle{Vorgehen}
   \begin{itemize}
     %\item Arbeitet auf zusammenhängenden Arrays
     \item Eingabe-Zahlenliste in $N^{\frac{1}{3}}$ Teillisten
@@ -88,8 +89,6 @@ regular polygon, regular polygon sides=3,shape border rotate=-90,node distance =
   \frametitle{Funnelsort}
   \framesubtitle{k-Merger}
   \begin{itemize}
-    \item Nimmt $k$ sortierte Sequenzen
-    \item Rekursive merges von sortierten Sequenzen
   \end{itemize}
 \end{frame}
 
@@ -107,7 +106,7 @@ regular polygon, regular polygon sides=3,shape border rotate=-90,node distance =
 
 \begin{frame}
   \frametitle{Funnelsort}
-  \framesubtitle{Grafik}
+  \framesubtitle{Grafik - Funnel}
   \begin{center}
     \begin{tikzpicture}[every node/.style={scale=0.7},>=stealth']
       \node[bigsorter,scale=6] (sorter) {};
@@ -150,7 +149,41 @@ regular polygon, regular polygon sides=3,shape border rotate=-90,node distance =
   \end{center}
 \end{frame}
 
+\begin{frame}
+  \frametitle{Funnelsort}
+  \framesubtitle{Grafik - 2-merger}
+  \begin{center}
+    \begin{tikzpicture}[every node/.style={scale=0.7},>=stealth']
+      \node[bigsorter,scale=6] (sorter) {};
 
+      \node[buffer] (buffer1) [at=(sorter), right=0, yshift=20] {buffer};
+      \node[buffer] (buffer2) [at=(sorter), right=0, yshift=-20] {buffer};
+
+      \node[sorter] (lsorter1) [left of=buffer1, xshift=-30, yshift=50] {$\mathbb{L}_1$};
+      \node[sorter] (lsorter2) [left of=buffer2, xshift=-30, yshift=-50] {$\mathbb{L}_2$};
+
+      \node[sorter] (rsorter) [at=(sorter), right=90] {$\mathbb{R}$};
+
+      \draw[->] ([xshift=-1cm, yshift=0.15cm]lsorter1.west) -- ([yshift=0.15cm]lsorter1.west);
+      \draw[->] ([xshift=-1cm, yshift=-0.15cm]lsorter1.west) -- ([yshift=-0.15cm]lsorter1.west);
+      \draw[->] ([xshift=-1cm, yshift=0.15cm]lsorter2.west) -- ([yshift=0.15cm]lsorter2.west);
+      \draw[->] ([xshift=-1cm, yshift=-0.15cm]lsorter2.west) -- ([yshift=-0.15cm]lsorter2.west);
+
+      \draw[->] (lsorter1.east) to [out=east,in=west,looseness=1.5] (buffer1.west);
+      \draw[->] (lsorter2.east) to [out=east,in=west,looseness=1.5] (buffer2.west);
+
+      \draw[->] (buffer1.east) to [out=east,in=west,looseness=1.5] ([yshift=0.15cm]rsorter.west);
+      \draw[->] (buffer2.east) to [out=east,in=west,looseness=1.5] ([yshift=-0.15cm]rsorter.west);
+
+      \draw[->] (rsorter.east) -- ([xshift=1.25cm]rsorter.east);
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Funnelsort}
+  \framesubtitle{Praxistauglichkeit}
+\end{frame}
 
 \end{document}
 
