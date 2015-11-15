@@ -46,7 +46,7 @@ void print(int* X, int n) {
 
 int main (int argc, char** argv) {
   int n = atoi(argv[1]);
-  int A[n] = {};
+  int A[n];
   int* X = A;
   int x;
   while (cin >> x) {
