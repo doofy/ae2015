@@ -11,3 +11,4 @@
 *.blg
 *.run.xml
 *.vrb
+/projekt/graph-generator-java/target/
