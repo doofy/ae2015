@@ -18,6 +18,7 @@ void printUsage(string progname) {
   cerr << "full: " << "  Read a full cost matrix from filename" << endl;
   cerr << "half: " << "  Read half a cost matrix from filename" << endl;
   cerr << "#nodes: " << "Number of nodes in cost matrix" << endl;
+  cerr << "d: " << "     Node wheight" << endl;
 }
 
 void readHalf(string filename, int n) {
