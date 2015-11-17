@@ -1,0 +1,21 @@
+EUCLIDEAN:
+
+Celso C. Ribeiroa, Mauricio C. Souzab
+Variable neighborhood search for the degree-constrained minimum spanning tree problem
+"...
+CRD and SYM are randomly generated Euclidean problems in complete graphs with up to 100 vertices,
+with node degrees in the constrained spanning tree bounded by three.
+For both CRD and SYM problem classes, ten instances have been generated for each graph size.
+...
+STR and SHRD have been generated with the purpose of characterizing more difficult instances.
+In series STR, nodes are distributed in clusters within Euclidean spaces of given dimension.
+...
+The 24 non-euclidean problems in class SHRD are such that there are two instances for each value of |V|=15,20,25,
+and 30, and maximum degrees equal to 3, 4, and 5.
+..."
+
+SCALE-FREE:
+TODO
+
+UNIFORM RANDOM (Erdős–Rényi):
+TODO
