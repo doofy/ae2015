@@ -30,7 +30,7 @@ void readHalf(string filename, int n) {
       data[n * i + j] = nextint;
       data[n * j + i] = nextint;
       stringstream edge;
-      edge << i + 1 << " " << j + 1 << " " << nextint;
+      edge << i + 1 << " " << j + 1 << " " << nextint << " 0";
       edges.push_back(edge.str());
     }
   }
@@ -45,7 +45,7 @@ void readFull(string filename, int n) {
       f >> nextint;
       data[n * i + j] = nextint;
       stringstream edge;
-      edge << i + 1 << " " << j + 1 << " " << nextint;
+      edge << i + 1 << " " << j + 1 << " " << nextint << " 0";
       edges.push_back(edge.str());
     }
   }
